@@ -129,9 +129,15 @@ const screenController = function () {
   }
 
   function updateScore(Players) {
-    $DOMelements.$firstPlayerScore.innerHTML = Players.firstPlayer.currentScore;
-    $DOMelements.$secondPlayerScore.innerHTML =
-      Players.secondPlayer.currentScore;
+    if (Players == undefined) {
+      $DOMelements.$firstPlayerScore.innerHTML = "0";
+      $DOMelements.$secondPlayerScore.innerHTML = "0";
+    } else {
+      $DOMelements.$firstPlayerScore.innerHTML =
+        Players.firstPlayer.currentScore;
+      $DOMelements.$secondPlayerScore.innerHTML =
+        Players.secondPlayer.currentScore;
+    }
   }
 
   function displayWinner() {
@@ -262,6 +268,7 @@ const gameController = (function () {
           "playerName first-name isTurn";
         gameScreen.$DOMelements.$secondPlayerName.className =
           "playerName second-name";
+        gameScreen.updateScore();
       }
     );
   }
