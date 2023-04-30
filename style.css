@@ -135,7 +135,7 @@ div[border="right"] {
   white-space: nowrap;
 }
 
-.winner-message {
+.game-result {
   font-size: 1.7vw;
   letter-spacing: 0.3vw;
   text-align: center;

@@ -36,6 +36,7 @@ const screenController = function () {
     const $secondPlayerScore = document.querySelector(".second-score");
     const $winnerMessage = document.querySelector(".winner-card.winner");
     const $winnerName = document.querySelector(".winner-name");
+    const $gameResult = document.querySelector(".game-result");
 
     //Retrieve input fields elements
     const $firstPlayerNameInput = document.querySelector("#player-one");
@@ -66,6 +67,7 @@ const screenController = function () {
       $crossSelect,
       $winnerMessage,
       $winnerName,
+      $gameResult,
     };
   }
 
@@ -292,12 +294,42 @@ const gameController = (function () {
   function isWinner(winnerPlayer) {
     disableCells();
     gameScreen.$DOMelements.$winnerName.innerHTML = winnerPlayer.getName();
+    gameScreen.$DOMelements.$gameResult.innerHTML = "Winner";
     winnerPlayer.currentScore += 1;
     gameScreen.displayWinner();
     setTimeout(() => gameScreen.removeDisplayWinner(), 3000);
     setTimeout(() => enableCells(), 4000);
     setTimeout(() => gameScreen.resetGameboard(), 3000);
     gameScreen.updateScore(Players);
+    gameBoardMatrix = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ];
+  }
+
+  function checkDraw() {
+    const cells = gameScreen.getGameboard();
+    let checkDraw = false;
+    for (let i = 0; i < Object.values(cells)[0].length; i++) {
+      if (Object.values(cells)[0][i].innerHTML != "") {
+        checkDraw = true;
+      } else {
+        checkDraw = false;
+        break;
+      }
+    }
+    return checkDraw;
+  }
+
+  function isDraw() {
+    disableCells();
+    gameScreen.$DOMelements.$winnerName.innerHTML = " X O";
+    gameScreen.$DOMelements.$gameResult.innerHTML = "Draw !";
+    gameScreen.displayWinner();
+    setTimeout(() => gameScreen.removeDisplayWinner(), 3000);
+    setTimeout(() => enableCells(), 4000);
+    setTimeout(() => gameScreen.resetGameboard(), 3000);
     gameBoardMatrix = [
       [0, 0, 0],
       [0, 0, 0],
@@ -335,6 +367,8 @@ const gameController = (function () {
               ] = 1;
               if (checkWinner()) {
                 isWinner(Players.firstPlayer);
+              } else if (checkDraw()) {
+                isDraw();
               } else {
                 switchPlayerTurn();
               }
@@ -348,6 +382,8 @@ const gameController = (function () {
               ] = 2;
               if (checkWinner()) {
                 isWinner(Players.firstPlayer);
+              } else if (checkDraw()) {
+                isDraw();
               } else {
                 switchPlayerTurn();
               }
@@ -367,6 +403,8 @@ const gameController = (function () {
               if (checkWinner()) {
                 isWinner(Players.secondPlayer);
                 switchPlayerTurn();
+              } else if (checkDraw()) {
+                isDraw();
               } else {
                 switchPlayerTurn();
               }
@@ -381,6 +419,8 @@ const gameController = (function () {
               if (checkWinner()) {
                 isWinner(Players.secondPlayer);
                 switchPlayerTurn();
+              } else if (checkDraw()) {
+                isDraw();
               } else {
                 switchPlayerTurn();
               }
