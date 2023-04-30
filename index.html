@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="normalize.css" />
+    <script
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="play-mode">
+      <div class="crosscercle">
+        <div class="cross start">X</div>
+        <div class="cercle start">O</div>
+      </div>
+      <p class="play-mode-prompt">Choose your play mode</p>
+      <button class="mode-button ai-mode">With AI</button>
+      <button class="mode-button friend-mode">With a friend</button>
+    </div>
+
+    <div class="player-names">
+      <div class="crosscercle">
+        <div class="cross start">X</div>
+        <div class="cercle start">O</div>
+      </div>
+      <p class="play-name-prompt">Enter your names :</p>
+      <div class="input-name one">
+        <input type="text" id="player-one" name="player-name" required />
+        <label for="player-one">First player</label>
+      </div>
+      <div class="input-name two">
+        <input type="text" id="player-two" name="player-name" required />
+        <label for="player-two">Second player</label>
+      </div>
+      <button class="name-button">Continue</button>
+    </div>
+
+    <div class="pick-side">
+      <div class="crosscercle animated">
+        <div class="cross start">
+          X
+          <input type="radio" id="cross" name="pick-side" />
+        </div>
+        <div class="cercle start">
+          O
+          <input type="radio" id="cercle" name="pick-side" />
+        </div>
+      </div>
+      <div class="pick-side-prompt">
+        <p class="play-name-prompt">Pick your side :</p>
+        <div class="choosing-player">Player 1</div>
+      </div>
+      <button class="side-button">Continue</button>
+    </div>
+
+    <div class="main-container">
+      <div class="gameInfo">
+        <span class="playerName first-name isTurn">Ayman</span>
+        <div class="score">
+          <span class="playerScore first-score">0</span> -
+          <span class="playerScore second-score">0</span>
+        </div>
+        <span class="playerName second-name">Computer</span>
+      </div>
+
+      <div class="gameBoard">
+        <div
+          class="grid-item top-left"
+          row="1"
+          column="1"
+          border="right bottom"
+        ></div>
+        <div
+          class="grid-item border"
+          row="1"
+          column="2"
+          border="right bottom"
+        ></div>
+        <div
+          class="grid-item top-right"
+          row="1"
+          column="3"
+          border="bottom"
+        ></div>
+        <div class="grid-item" row="2" column="1" border="right bottom"></div>
+        <div class="grid-item" row="2" column="2" border="right bottom"></div>
+        <div class="grid-item" row="2" column="3" border="bottom"></div>
+        <div
+          class="grid-item bottom-left"
+          row="3"
+          column="1"
+          border="right"
+        ></div>
+        <div class="grid-item" row="3" column="2" border="right"></div>
+        <div class="grid-item bottom-right" row="3" column="3"></div>
+
+        <div class="winner-card winner">
+          <span class="winner-name"></span>
+          <p class="winner-message">Winner</p>
+        </div>
+      </div>
+
+      <div class="gameControl">
+        <button class="restart">Restart</button>
+      </div>
+    </div>
+  </body>
+</html>

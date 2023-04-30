@@ -1,0 +1,472 @@
+:root {
+  /* Colors */
+  --main-background-color: hsl(0, 0%, 97%);
+  --gameboard-background: hsl(0, 0%, 99%);
+  --button-color: hsl(221, 81%, 49%);
+  --text-color: hsl(216, 47%, 35%);
+  --grid-border-color: hsl(206, 7%, 80%);
+  --box-shadow-color-hsl: 224, 30%, 27%;
+  --cercle-orange-color: 18, 76%, 67%;
+  --cross-blue-color: 221, 81%, 49%;
+
+  /*Gradient Colors */
+  --cross-gradient-final: hsl(181, 72%, 72%);
+  --cercle-gradient-initial: hsl(18, 76%, 67%);
+  --cercle-gradient-final: hsl(49, 57%, 87%);
+
+  /*Gradient Definition*/
+  --cross-gradient: -webkit-linear-gradient(
+    30deg,
+    var(--button-color),
+    var(--cross-gradient-final)
+  );
+  --cercle-gradient: -webkit-linear-gradient(
+    30deg,
+    var(--cercle-gradient-initial),
+    var(--cercle-gradient-final)
+  );
+
+  /* Values */
+  --grid-cell-size: 10vw;
+  --gameboard-padding: 1vw;
+}
+
+body {
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: var(--main-background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.gameBoard {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--grid-cell-size) var(--grid-cell-size) var(
+      --grid-cell-size
+    );
+  grid-template-rows: var(--grid-cell-size) var(--grid-cell-size) var(
+      --grid-cell-size
+    );
+  border-radius: 2vw;
+  background-color: var(--gameboard-background);
+  padding: var(--gameboard-padding);
+  box-shadow: 0.5rem 1rem 3rem hsl(var(--box-shadow-color-hsl), 0.2);
+}
+
+.main-container {
+  display: none;
+  flex-direction: column;
+  gap: 30px;
+  animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7vw;
+  pointer-events: all;
+}
+
+.grid-item:hover {
+  cursor: pointer;
+}
+
+.grid-item.top-right {
+  border-radius: 0 2vw 0 0;
+}
+
+.grid-item.top-left {
+  border-radius: 2vw 0 0 0;
+  border-right: 1px solid var(--grid-border-color);
+}
+
+.grid-item.bottom-left {
+  border-radius: 0 0 0 2vw;
+}
+
+.grid-item.bottom-right {
+  border-radius: 0 0 2vw 0;
+}
+
+div[border="right bottom"] {
+  border-right: 1px solid var(--grid-border-color);
+  border-bottom: 1px solid var(--grid-border-color);
+}
+
+div[border="bottom"] {
+  border-bottom: 1px solid var(--grid-border-color);
+}
+
+div[border="right"] {
+  border-right: 1px solid var(--grid-border-color);
+}
+
+.gameInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  font-size: 1.1vw;
+}
+
+.winner > div:not(:last-child) {
+  opacity: 20%;
+  transition: opacity 300ms;
+}
+
+.winner-card.winner {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: radioFadeIn 1500ms ease-in-out forwards;
+}
+
+.winner-name {
+  font-size: 4vw;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.winner-message {
+  font-size: 1.7vw;
+  letter-spacing: 0.3vw;
+  text-align: center;
+}
+
+.playerName.first-name.isTurn {
+  font-weight: bolder;
+  transition: font-weight 300ms ease-in-out;
+  animation: shake-horizontal 5s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    infinite;
+}
+
+.playerName.second-name.isTurn {
+  font-weight: bolder;
+  transition: font-weight 300ms ease-in-out;
+  animation: shake-horizontal 5s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    forwards;
+}
+
+.playerTurn {
+  display: flex;
+  justify-content: center;
+
+  border: 0px black dashed;
+}
+
+.score,
+.choosing-player {
+  position: relative;
+  background-color: var(--gameboard-background);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 6vw;
+  height: 3vh;
+  border-radius: 0.75vw;
+  font-weight: bold;
+  box-shadow: 0.5rem 1rem 3rem hsl(var(--box-shadow-color-hsl), 0.2);
+}
+
+.playerName {
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.gameControl {
+  display: grid;
+  place-items: center;
+}
+
+.mode-button,
+.restart,
+.name-button,
+.side-button {
+  border: 0;
+  border-radius: 100vw;
+  padding: 0.5vw 2vw;
+  font-size: 1vw;
+  font-weight: 300;
+  color: var(--text-color);
+  background-color: var(--gameboard-background);
+  box-shadow: 0.5rem 1rem 3rem hsl(var(--box-shadow-color-hsl), 0.3);
+  transition: letter-spacing 300ms;
+}
+
+.mode-button:hover,
+.restart:hover,
+.name-button:hover,
+.side-button:hover {
+  cursor: pointer;
+  font-weight: 200;
+  letter-spacing: 2px;
+  color: var(--gameboard-background);
+  background-color: var(--button-color);
+  transition: font-weight 100ms ease-in;
+  transition: letter-spacing 300ms ease-in-out;
+  transition: background-color 400ms ease-in-out;
+}
+
+.cross {
+  background: var(--cross-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+
+.cercle {
+  background: var(--cercle-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+}
+
+.pick-side .cercle.start,
+.pick-side .cross.start {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes radioFadeIn {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+input[type="radio"] {
+  margin-top: 20px;
+  height: 1vw;
+  animation: radioFadeIn 6s;
+}
+
+.play-mode,
+.player-names,
+.pick-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.play-mode {
+  gap: 20px;
+  display: flex;
+}
+
+.player-names {
+  gap: 50px;
+  display: none;
+}
+
+.pick-side {
+  display: none;
+}
+
+.crosscercle {
+  display: flex;
+  gap: 30px;
+  font-size: 150px;
+  font-weight: bold;
+}
+
+.crosscercle.animated {
+  transform: translateY(-61px);
+}
+
+.cercle.start::before {
+  content: "O";
+  position: absolute;
+  height: 20px;
+  width: 90px;
+  z-index: -1;
+  box-shadow: 0.7rem 9.5rem 1rem hsl(var(--cercle-orange-color), 0.2);
+}
+
+.cross.start::before {
+  content: "X";
+  position: absolute;
+  height: 20px;
+  width: 90px;
+  z-index: -1;
+  box-shadow: 0.7rem 9.5rem 1rem hsl(var(--cross-blue-color), 0.2);
+}
+
+.play-mode-prompt,
+.play-name-prompt {
+  font-size: max(20px, 1.5vw);
+  font-weight: 500;
+}
+
+.input-name {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-name.one {
+  margin-bottom: 10px;
+}
+
+.input-name.one label {
+  color: var(--cross-blue-color);
+}
+
+.input-name.two label {
+  color: hsl(var(--cercle-orange-color));
+}
+
+.input-name.one input {
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+}
+
+.input-name.two input {
+  border-bottom: 1px solid hsl(var(--cercle-orange-color));
+  color: hsl(var(--cercle-orange-color));
+}
+
+.input-name input {
+  outline: 0;
+  border: 0;
+  background: transparent;
+  width: 11.5vw;
+  font-size: 15px;
+}
+
+.input-name input:hover,
+.input-name input:hover ~ label {
+  cursor: pointer;
+}
+
+.input-name label {
+  position: absolute;
+  top: -1px;
+  font-size: 14px;
+  transition: 0.5s;
+}
+
+.input-name input:focus ~ label,
+.input-name input:valid ~ label {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  top: -25px;
+  transition: 0.5s;
+}
+
+.pick-side-prompt {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  animation: slide-up 2s forwards;
+  animation-timing-function: ease-in-out;
+}
+
+.crosscercle.animated {
+  animation: slide-down 2s forwards;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-61px);
+  }
+
+  100% {
+    transform: translateY(85px);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-270px);
+  }
+}
+
+.play-name-prompt {
+  margin-bottom: 0;
+}
+.choosing-player {
+  font-weight: 500;
+  font-size: 13px;
+  width: max-content;
+  padding: 0 12px 0 12px;
+}
+
+.side-button {
+  margin-top: 50px;
+}
+
+/* Animation for gameboard appearance */
+
+@-webkit-keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* Animation when player turn is active */
+
+@keyframes shake-horizontal {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60% {
+    transform: translateX(10px);
+  }
+  80% {
+    transform: translateX(8px);
+  }
+  90% {
+    transform: translateX(-8px);
+  }
+}
